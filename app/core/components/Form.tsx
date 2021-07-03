@@ -9,12 +9,19 @@ export interface FormProps<S extends z.ZodType<any, any>>
   children?: ReactNode
   /** Text to display in the submit button */
   submitText?: string
+  resetText?: string
   schema?: S
   onSubmit: (values: z.infer<S>) => Promise<void | OnSubmitResult>
+  onReset: (values: z.infer<S>) => Promise<void | OnResetResult>
   initialValues?: FormikProps<z.infer<S>>["initialValues"]
 }
 
 interface OnSubmitResult {
+  FORM_ERROR?: string
+  [prop: string]: any
+}
+
+interface OnResetResult {
   FORM_ERROR?: string
   [prop: string]: any
 }
@@ -24,9 +31,11 @@ export const FORM_ERROR = "FORM_ERROR"
 export function Form<S extends z.ZodType<any, any>>({
   children,
   submitText,
+  resetText,
   schema,
   initialValues,
   onSubmit,
+  onReset,
   ...props
 }: FormProps<S>) {
   const [formError, setFormError] = useState<string | null>(null)
@@ -45,9 +54,20 @@ export function Form<S extends z.ZodType<any, any>>({
           setErrors(otherErrors)
         }
       }}
+      onReset={async (values, { setErrors }) => {
+        const { FORM_ERROR, ...otherErrors } = (await onReset(values)) || {}
+
+        if (FORM_ERROR) {
+          setFormError(FORM_ERROR)
+        }
+
+        if (Object.keys(otherErrors).length > 0) {
+          setErrors(otherErrors)
+        }
+      }}
     >
-      {({ handleSubmit, isSubmitting }) => (
-        <form onSubmit={handleSubmit} className="form" {...props}>
+      {({ handleSubmit, handleReset, isSubmitting }) => (
+        <form onSubmit={handleSubmit} onReset={handleReset} className="form" {...props}>
           {/* Form fields supplied as children are rendered here */}
           {children}
 
@@ -63,11 +83,11 @@ export function Form<S extends z.ZodType<any, any>>({
             </button>
           )}
 
-          <style global jsx>{`
-            .form > * + * {
-              margin-top: 1rem;
-            }
-          `}</style>
+          {resetText && (
+            <button type="reset" disabled={isSubmitting}>
+              {resetText}
+            </button>
+          )}
         </form>
       )}
     </Formik>

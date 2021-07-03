@@ -18,35 +18,17 @@ export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldPro
 
     return (
       <div {...outerProps}>
-        <label>
-          {label}
+        <label className="block text-sm font-medium text-gray-700">{label}</label>
+        <div className="mt-1">
           <input {...input} disabled={isSubmitting} {...props} ref={ref} />
-        </label>
-
-        <ErrorMessage name={name}>
-          {(msg) => (
-            <div role="alert" style={{ color: "red" }}>
-              {msg}
-            </div>
-          )}
-        </ErrorMessage>
-
-        <style jsx>{`
-          label {
-            display: flex;
-            flex-direction: column;
-            align-items: start;
-            font-size: 1rem;
-          }
-          input {
-            font-size: 1rem;
-            padding: 0.25rem 0.5rem;
-            border-radius: 3px;
-            border: 1px solid purple;
-            appearance: none;
-            margin-top: 0.5rem;
-          }
-        `}</style>
+          <ErrorMessage name={name}>
+            {(msg) => (
+              <div role="alert" style={{ color: "red" }}>
+                {msg}
+              </div>
+            )}
+          </ErrorMessage>
+        </div>
       </div>
     )
   }
