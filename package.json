@@ -2,9 +2,9 @@
   "name": "blitz-react-table",
   "version": "1.0.0",
   "scripts": {
-    "dev": "blitz dev",
+    "blitz:dev": "blitz dev",
     "build": "blitz build",
-    "start": "npm run migrate:dev && npm run db:seed && blitz start",
+    "start": "npm run build && npm run migrate:dev && npm run db:seed && blitz start",
     "migrate:dev": "blitz prisma migrate dev",
     "db:seed": "blitz db seed",
     "studio": "blitz prisma studio",
