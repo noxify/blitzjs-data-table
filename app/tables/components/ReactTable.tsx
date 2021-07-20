@@ -1,12 +1,13 @@
-import getAllData from "@/app/dashboard/queries/getAllData"
+import { useMemo } from "react"
 import { usePaginatedQuery, useRouter } from "blitz"
 
-import { useMemo } from "react"
-import ReactDataTable from "@/app/core/components/ReactDataTable"
-import NumberRangeColumnFilter from "@/app/core/components/filter/NumberRangeColumnFilter"
-import TextColumnFilter from "@/app/core/components/filter/TextColumnFilter"
+import getAllData from "@/app/tables/queries/getAllData"
 
-function OverviewTable() {
+import ReactDataTable from "@/app/tables/components/ReactDataTable"
+import NumberRangeColumnFilter from "@/app/filter/components/NumberRangeColumnFilter"
+import TextColumnFilter from "@/app/filter/components/TextColumnFilter"
+
+const ReactTable = () => {
   const columns = useMemo(
     () => [
       {
@@ -22,23 +23,18 @@ function OverviewTable() {
     []
   )
 
-  const filters = useMemo(
-    () => [
-      {
-        accessor: "id",
-        component: NumberRangeColumnFilter,
-        filter: "between",
-        filterLabel: "Search by id",
-      },
-      {
-        accessor: "title",
-        component: TextColumnFilter,
-        filter: "contains",
-        filterLabel: "Search by title",
-      },
-    ],
-    []
-  )
+  const filters = [
+    {
+      label: "Search by id",
+      id: "id",
+      component: NumberRangeColumnFilter,
+    },
+    {
+      label: "Search by title",
+      id: "title",
+      component: TextColumnFilter,
+    },
+  ]
 
   const router = useRouter()
   const page = Number(router.query.page) || 0
@@ -64,7 +60,7 @@ function OverviewTable() {
       filters={filters}
       data={items}
       loading={isLoading}
-      pageCount={count / perPage}
+      pageCount={Math.ceil(count / perPage)}
       pageIndex={page}
       pageSize={perPage}
       hasNext={hasMore}
@@ -75,4 +71,4 @@ function OverviewTable() {
   )
 }
 
-export default OverviewTable
+export default ReactTable

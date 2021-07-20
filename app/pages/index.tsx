@@ -1,7 +1,5 @@
-import { Suspense } from "react"
 import { Link, BlitzPage } from "blitz"
-import Layout from "app/core/layouts/Layout"
-import OverviewTable from "@/app/dashboard/components/OverviewTable"
+import Layout from "@/app/core/layouts/Layout"
 
 /*
  * This file is just for a pleasant getting started page for your new app.
@@ -9,11 +7,7 @@ import OverviewTable from "@/app/dashboard/components/OverviewTable"
  */
 
 const Home: BlitzPage = () => {
-  return (
-    <div className="container">
-      <OverviewTable />
-    </div>
-  )
+  return <>Please choose a data table variant.</>
 }
 
 Home.suppressFirstRenderFlicker = true

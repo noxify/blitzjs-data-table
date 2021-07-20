@@ -5,7 +5,7 @@ import { useTable, usePagination, useSortBy } from "react-table"
 import classNames from "@/app/helpers/classNames"
 import { SortAscendingIcon } from "@heroicons/react/solid"
 import { SortDescendingIcon } from "@heroicons/react/outline"
-import FilterButton from "@/app/core/components/filter/FilterButton"
+import FilterButton from "@/app/filter/components/FilterButton"
 
 function ReactDataTable({
   columns,
