@@ -7,6 +7,8 @@ This repository contains two examples:
 
 # Demo
 
+https://githubbox.com/noxify/blitz-react-table
+
 # Credits
 
 - TailwindCSS
