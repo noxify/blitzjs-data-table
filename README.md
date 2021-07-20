@@ -7,7 +7,7 @@ This repository contains two examples:
 
 # Demo
 
-https://githubbox.com/noxify/blitz-react-table
+https://githubbox.com/noxify/blitzjs-data-table
 
 # Credits
 
